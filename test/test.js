@@ -4,28 +4,10 @@ var mongoose = require('mongoose');
 var test = require('tape');
 var request = require('supertest');
 var app = require('../time');
-var User = mongoose.model('Task');
+var Task = mongoose.model('Task');
 var Project = mongoose.model('Project');
 
-test('create task', t => {
-    var task = {
-        name: 'test_task',
-        desc: 'test_desc',
-        priority: 3,
-        deadline: Date.now()
-    };
-
-    request(app)
-        .post('/api/tasks')
-        .send(task)
-        .expect(201)
-        .end(function(err, res) {
-            //console.log(res.body);
-            t.end();
-        });
-});
-
-test('create task with new project', t => {
+test('CREATE TASK', t => {
     var task = {
         name: 'test_task_new_project',
         desc: 'test_desc_new_project',
@@ -42,28 +24,32 @@ test('create task with new project', t => {
         .send(task)
         .expect(201)
         .end(function(err, res) {
-            Project.find({ name: 'new_project' }, function(err, project) {
-                if (err) throw err;
-                console.log(project);
+            Task.find({ name: 'test_task_new_project'}, function(err, task) {
+                if (err) throw err; // TODO assert not null
+                console.log(task);
+                Project.find({ name: 'new_project' }, function(err, project) {
+                    if (err) throw err; // TODO assert not null
+                    console.log(project);
+                    t.equals(task.project, project._id);
+                });
             });
             console.log(res.body);
             t.end();
         });
 });
 
-test('my first test', t => {
-    request(app)
-        .get('/api/tasks')
-        .expect('Content-Type', '/json')
-        .expect(200)
-        .end(function(err, res) {
-            console.log(res.body);
-            t.end();
-        });
+test('READ TASK', t => {
+});
+
+test('UPDATE TASK', t => {
+});
+
+test('REMOVE TASK', t => {
 });
 
 
 test('finish', t => {
+    // TODO clear db
     mongoose.disconnect();
     t.pass('closing db connection');
     t.end();
