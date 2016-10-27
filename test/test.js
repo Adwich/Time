@@ -4,8 +4,15 @@ var mongoose = require('mongoose');
 var test = require('tape');
 var request = require('supertest');
 var app = require('../time');
+var { cleanup } = require('./utils');
 var Task = mongoose.model('Task');
 var Project = mongoose.model('Project');
+
+test('Clean up', cleanup);
+
+/*
+ * Test our CRUD application
+ */
 
 test('CREATE TASK', t => {
     var task = {
@@ -39,17 +46,22 @@ test('CREATE TASK', t => {
 });
 
 test('READ TASK', t => {
+    t.end();
 });
 
 test('UPDATE TASK', t => {
+    t.end();
 });
 
 test('REMOVE TASK', t => {
+    t.end();
 });
 
+/*
+ * Test errors
+ */
 
 test('finish', t => {
-    // TODO clear db
     mongoose.disconnect();
     t.pass('closing db connection');
     t.end();
