@@ -11,8 +11,8 @@ var TaskSchema = new Schema({
     priority: { type: Number, default: 1 }, // [1..5]
     score: Number,
     start: Date,
-    deadline: Date,
-    project: { type: Schema.Types.ObjectId, ref: 'Project'}
+    deadline: Date
+    //project: { type: Schema.Types.ObjectId, ref: 'Project'}
 });
 
 /**
