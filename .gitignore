@@ -42,3 +42,9 @@ jspm_packages
 
 # Output of 'npm pack'
 *.tgz
+
+# IntelliJ
+/.idea
+
+# Webpack & Babel result
+/dist

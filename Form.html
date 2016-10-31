@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<body>
+
+<form action="" method="post" id="addTask">
+    <input type="text" name="name"/>
+    <input type="text" name="priority"/>
+    <input type="date" name="deadline"/>
+    <textarea name="description" id="" cols="30" rows="10"></textarea>
+    <button id="submit">Submit</button>
+</form>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+    var form = $('#addTask');
+    var submit = $('#submit');
+    form.on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: 'localhost:8888'
+        })
+    })
+</script>
+</body>
