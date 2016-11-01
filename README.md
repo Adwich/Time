@@ -1,6 +1,6 @@
 # Time
 
-## Dépendances
+## Installation
 
 ```
 npm install -g webpack
