@@ -69,16 +69,6 @@ var TaskListing = React.createClass({
     }
 });
 
-//Composant qui comportera le formulaire d'ajout d'une tache
-//Le POST
-var AddTask = React.createClass({
-    render: function() {
-        return (
-            <h1>Adeeeel</h1>
-        )
-    }
-});
-
 //Le point de départ de l'app
 var App = React.createClass({
     render: function () {
@@ -91,11 +81,115 @@ var App = React.createClass({
                     /*ici source est un props; un paramètre que l'on passe au
                      * composant. Ici l'url où faire la requête Get*/
                 }
-                <TaskListing source="https://api.myjson.com/bins/4kc6q"/>
+                <TaskListing source="http://localhost:8888/api/tasks"/>
             </div>
+        //<TaskListing source="https://api.myjson.com/bins/4kc6q"/>
         )
     }
 });
+
+const reactFormContainer = document.querySelector('.react-form-container');
+
+class ReactFormLabel extends React.Component {
+    constructor() {
+        super();
+    }
+
+    render() {
+        return(
+            <label htmlFor={this.props.htmlFor}>{this.props.title}</label>
+        )
+    }
+}
+
+//formulaire et requête d'ajout d'une tâche
+class AddTask extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            name: '',
+            priority: '',
+            deadline: '',
+            desc: ''
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(e) {
+        let newState = {};
+
+        newState[e.target.name] = e.target.value;
+
+        this.setState(newState);
+    };
+
+    handleSubmit(e, message) {
+        e.preventDefault();
+
+        let formData = {
+            name: this.state.name,
+            priority: this.state.priority,
+            deadline: this.state.deadline,
+            desc: this.state.desc
+        }
+
+        if (formData.name.length < 1 || formData.priority.length < 1 || formData.deadline.length < 1 || formData.desc.length < 1) {
+            return false;
+        }
+
+        axios.post('http://localhost:8888/api/tasks',
+            formData)
+            .then(function(response) {
+                console.log(response);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+
+        this.setState({
+            name: '',
+            priority: '',
+            deadline: '',
+            desc: ''
+        });
+    };
+
+    render() {
+        return(
+            <form className='react-form' onSubmit={this.handleSubmit}>
+                <h1>Say Hi!</h1>
+                <fieldset className='form-group'>
+                    <ReactFormLabel htmlFor='formName' title='Task Name:' />
+
+                    <input id='formName' className='form-input' name='name' type='text' ref='formName' required onChange={this.handleChange} value={this.state.name} />
+                </fieldset>
+
+                <fieldset className='form-group'>
+                    <ReactFormLabel htmlFor='formPriority' title='Priority :' />
+
+                    <input id='formpriority' className='form-input' name='priority' type='text' required onChange={this.handleChange} value={this.state.priority} />
+                </fieldset>
+
+                <fieldset className='form-group'>
+                    <ReactFormLabel htmlFor='formDeadline' title='Deadline:'/>
+
+                    <input id='formDeadline' className='form-input' name='deadline' type='text' required onChange={this.handleChange} value={this.state.subject} />
+                </fieldset>
+
+                <fieldset className='form-group'>
+                    <ReactFormLabel htmlFor='formDescription' title='Description :' />
+
+                    <textarea id='formDescription' className='form-textarea' name='desc' required onChange={this.handleChange}></textarea>
+                </fieldset>
+
+                <div className='form-group'>
+                    <input id='formButton' className='btn' type='submit' placeholder='Add task' />
+                </div>
+            </form>
+        )
+    }
+}
 
 //Le point de départ, Rendu réel de l'appli dans la div mère -> root.
 ReactDom.render(<App/>, document.querySelector("#root"));
