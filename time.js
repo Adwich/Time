@@ -2,6 +2,7 @@
 
 var express = require('express');
 var app = express();
+var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Task = require('./app/routes/task.js');
@@ -32,15 +33,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.all('*', function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
-
-
-
 var router = express.Router();
 
 // middleware
@@ -62,5 +54,10 @@ router.route('/tasks/:task_id')
 
 // Register our routes
 app.use('/api', router);
+
+// serve index.html
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/app/views/index.html'));
+});
 
 module.exports = app;
