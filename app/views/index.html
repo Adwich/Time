@@ -1,2 +1,27 @@
+<!doctype html>
+<html>
+<h1>Time</h1>
 
-bonjour
+<head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.getJSON("http://localhost:8888/api/tasks", { get_param: 'value' }, function(data) {
+                var items = [];
+                $.each(data, function(key, val) {
+                    var task = JSON.stringify(val.name);
+                    items.push("<li id='" + key + "'>" + task + "</li>");
+                });
+                $("<ul/>", {
+                    "class": "my-new-list",
+                    html: items.join("")
+                }).appendTo("body");
+            });
+        });
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
