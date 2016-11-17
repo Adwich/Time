@@ -4,24 +4,26 @@
 
 <head>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $.getJSON("http://localhost:8888/api/tasks", { get_param: 'value' }, function(data) {
-                var items = [];
-                $.each(data, function(key, val) {
-                    var task = JSON.stringify(val.name);
-                    items.push("<li id='" + key + "'>" + task + "</li>");
-                });
-                $("<ul/>", {
-                    "class": "my-new-list",
-                    html: items.join("")
-                }).appendTo("body");
-            });
-        });
+    <script type="text/javascript" src="index.js">
     </script>
 </head>
 
 <body>
+    <h3>Enter a task to enter into the database:</h3>
+    <input id="task-name" type="text" placeholder="name" />
+    <br/>
+    <input id="task-desc" type="text" placeholder="description" />
+    <br/>
+    <input id="task-priority" type="number" placeholder="priority" />
+    <br/>
+    <input id="task-deadline" type="date" placeholder="deadline" />
+    <br/>
+    <input id="task-submit" type="submit" />
+    <h4>Server response:</h4>
+    <p id="output"></p>
+
+    <h3>Tasks:</h3>
+    <div id="tasks"></div>
 </body>
 
 </html>

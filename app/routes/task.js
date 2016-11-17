@@ -6,8 +6,8 @@ function getTasks(req, res) {
     var query = Task.find({});
 
     query.exec((err, tasks) => {
-        if (err) res.send(err);
-        res.json(tasks);
+        if (err) res.status(500).send(err);
+        else res.json(tasks);
     });
 }
 
@@ -15,32 +15,37 @@ function postTask(req, res) {
     var newTask = new Task(req.body);
 
     newTask.save((err, task) => {
-        if (err) res.send(err);
-        res.json({
-            message: 'Task successfully created!',
-            task
-        });
+        if (err) res.status(500).send(err);
+        else
+            res.json({
+                message: 'Task successfully created!',
+                task
+            });
     });
 }
 
 function getTask(req, res) {
     Task.findById(req.params.task_id, (err, task) => {
-        if (err) res.send(err);
-        res.json(task);
+        if (err) res.status(500).send(err);
+        else res.json(task);
     });
 }
 
 function deleteTask(req, res) {
-    Task.remove({ _id: req.params.task_id }, (err, result) => {
-        if (err) res.send(err);
-        res.json({
+    Task.remove({
+        _id: req.params.task_id
+    }, (err, result) => {
+        if (err) res.status(500).send(err);
+        else res.json({
             message: 'Task deleted!'
         });
     });
 }
 
 function updateTask(req, res) {
-    Task.findById({ _id: req.params.task_id }, (err, task) => {
+    Task.findById({
+        _id: req.params.task_id
+    }, (err, task) => {
         if (err) res.send(err);
         Object.assign(task, req.body).save((err, task) => {
             if (err) res.send(err);
