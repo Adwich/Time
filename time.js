@@ -17,9 +17,8 @@ var Project = require('./app/models/project');
   /api/tasks/:task_id     DELETE      Delete a task
 */
 
-// connect to mongodb
-// mongoose.connect('mongodb://ananasr:gofuckyourself@ds063536.mlab.com:63536/time');
-mongoose.connect('mongodb://localhost:27017/time');
+// connect to mongo container
+mongoose.connect('mongodb://mongo-time:27017/time');
 
 // verify connection status
 var db = mongoose.connection;
