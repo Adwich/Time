@@ -168,6 +168,9 @@ test('Create task with project', t => {
  * Test errors
  */
 
+// clean database
+test('Clean up', cleanup);
+
 test('finish', t => {
     mongoose.disconnect();
     t.pass('closing db connection');
