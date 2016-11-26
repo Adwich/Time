@@ -1,13 +1,13 @@
 function getTasks() {
     return $.ajax({
-        url: "http://localhost:8888/api/tasks",
+        url: "http://localhost:3000/api/tasks",
         type: "GET"
     });
 };
 
 function createTask(task) {
     return $.ajax({
-        url: "http://localhost:8888/api/tasks",
+        url: "http://localhost:3000/api/tasks",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(task),

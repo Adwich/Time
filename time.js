@@ -18,7 +18,7 @@ var Project = require('./app/models/project');
 */
 
 // connect to mongo container
-mongoose.connect('mongodb://mongo-time:27017/time');
+mongoose.connect('mongodb://mongo:27017/time');
 
 // verify connection status
 var db = mongoose.connection;
